@@ -20,7 +20,7 @@ class ReplaceOneLetter:
         for i in range(len(string)):
             encryptik += self._originalDict[string[i]]
 
-        return encryptik.rever
+        return encryptik
 
     def translate(self, string: str) -> str:
 
