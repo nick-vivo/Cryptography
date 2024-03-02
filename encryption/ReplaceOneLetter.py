@@ -2,48 +2,49 @@
 class ReplaceOneLetter:
 
 
-    def __init__(self, originalDict: str, replaceDict: str):
+    def __init__(self, alphabet: str, cihep: str):
         
-        if len(originalDict) != len(replaceDict) or self.__checkDuplicatesInStr(originalDict) or self.__checkDuplicatesInStr(replaceDict):
-            raise "fail"
+        if len(alphabet) != len(cihep) or ReplaceOneLetter.checkDuplicatesInString(alphabet) or ReplaceOneLetter.checkDuplicatesInString(cihep):
+            raise Exception("Length alphabet != cihep or (alphabet or cihep have duplicates)")
 
-        self._originalDict = dict(zip(originalDict, replaceDict))
-        self._replaceDict = dict(zip(replaceDict, originalDict))
+        self._encryptor = dict(zip(alphabet, cihep))
+        self._translator = dict(zip(cihep, alphabet))
     
-    def encrypt(self, string: str) -> str:
+    def encrypt(self, textForEncrypt: str) -> str:
 
-        if not self.__checkCharacters(string, self._originalDict):
-            raise "fail"
+        if not self.haveAllCharactersInText(textForEncrypt, self._encryptor.keys()):
+            raise Exception("The text contains characters that are not in the dictionary")
         
         encryptik = ""
 
-        for i in range(len(string)):
-            encryptik += self._originalDict[string[i]]
+        for i in textForEncrypt:
+            encryptik += self._encryptor[i]
 
         return encryptik
 
-    def translate(self, string: str) -> str:
+    def translate(self, textForTranslate: str) -> str:
 
-        if not self.__checkCharacters(string, self._replaceDict):
-            raise "fail"
+        if not self.haveAllCharactersInText(textForTranslate, self._translator.keys()):
+            raise Exception("The text contains characters that are not in the dictionary")
         
         encryptik = ""
 
-        for i in range(len(string)):
-            encryptik += self._replaceDict[string[i]]
+        for i in textForTranslate:
+            encryptik += self._translator[i]
 
         return encryptik
 
-    def __checkDuplicatesInStr(self, strka: str) -> bool:
+    @staticmethod
+    def checkDuplicatesInString(string: str) -> bool:
         
-        return len(set(strka)) != len(strka)
+        return len(set(string)) != len(string)
     
-
-    def __checkCharacters(self, forTranslate: str, dictionary: dict) -> bool:
+    @staticmethod
+    def haveAllCharactersInText(text: str, characters: set) -> bool:
         
-        for i in forTranslate:
+        for i in set(text):
             
-            if i not in dictionary.values():
+            if i not in characters:
                 return False
             
         return True
