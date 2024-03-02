@@ -1,4 +1,4 @@
-class Vigenere:
+class Vigener:
 
 
     def __init__(self, alphabet: str, key: str):
@@ -10,7 +10,6 @@ class Vigenere:
         self._alphabet = alphabet
         self._key = key
 
-
     @staticmethod
     def encrypt(alphabet: str, key: str, text: str) -> str:
 
@@ -18,20 +17,17 @@ class Vigenere:
            or len(set(text)) > len(alphabet) or len(alphabet) == 0 or len(key) == 0 or len(text) == 0:
             raise Exception("Your key not contants in alphabet or bad alphabet")
         
-        alphabetDict = dict(zip(alphabet, range(len(alphabet))))
-
         cihep = ""
 
         indexForKey = 0
 
         for c in text:
                 
-            indexLetterInOriginalAlphabet = (alphabetDict[key[indexForKey % len(key)]] + alphabetDict[c]) % len(alphabet)
+            indexLetterInOriginalAlphabet = (alphabet.index(key[indexForKey % len(key)]) + alphabet.index(c)) % len(alphabet)
             cihep += alphabet[indexLetterInOriginalAlphabet]
             indexForKey += 1
         
         return cihep
-    
 
     @staticmethod
     def translate(alphabet: str, key: str, text: str) -> str:
@@ -48,7 +44,7 @@ class Vigenere:
 
         for c in text:
                 
-            indexLetterInOriginalAlphabet = (alphabetDict[c] - alphabetDict[key[indexForKey % len(key)]]) % len(alphabet)
+            indexLetterInOriginalAlphabet = (alphabet.index(c) - alphabet.index(key[indexForKey % len(key)])) % len(alphabet)
             cihep += alphabet[indexLetterInOriginalAlphabet]
             indexForKey += 1
         
