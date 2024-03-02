@@ -1,6 +1,6 @@
 import encryption.Enigma as En
-roter1 = En.Roter("АБВ","123")
-roter2 = En.Roter("123", "абв")
+roter1 = En.Roter("АБВ","АБВ")
+roter2 = En.Roter("", "абв")
 
 roters = [roter1, roter2]
 

@@ -76,6 +76,13 @@ class Enigma:
         
         return cihep
 
+    def encryptOldRotors(self, text: str, step: int = 1) -> str:
+        return self.encrypt(text, self._roters, step)
+
+    def encryptUpdateRotors(self, text: str, step: int = 1) -> str:
+        self.putRotorsInStartPosition()
+        return self.encrypt(text, self._roters, step)
+
     @staticmethod
     def translate(text: str, rotersEncryptAndStartPosition: List[Roter], stepForEncryptAndStartPosition: int = 1) -> list:
 
@@ -87,6 +94,13 @@ class Enigma:
             reversedRotors.append(rotor.reverseRoterSafeStep())
 
         return Enigma.encrypt(text, reversedRotors, -stepForEncryptAndStartPosition)
+    
+    def translateOldRotors(self, text: str, step: int = 1) -> str:
+        return self.translate(text, self._roters, step)
+
+    def translateUpdateRotors(self, text: str, step: int = 1) -> str:
+        self.putRotorsInStartPosition()
+        return self.translate(text, self._roters, step)
 
 
 
