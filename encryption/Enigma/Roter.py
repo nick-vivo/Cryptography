@@ -71,8 +71,6 @@ class Roter:
         return Roter(self._startPositionRotor, self._originalAlphabet, self._step)
     
     def reverseRoterNotSafeStep(self, step : int = 0) -> "Roter":
-
-        
         return Roter(self._startPositionRotor, self._originalAlphabet, step)
     
 
