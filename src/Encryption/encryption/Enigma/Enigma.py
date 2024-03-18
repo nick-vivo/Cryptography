@@ -145,7 +145,7 @@ class Enigma:
         return new_text
 
     @staticmethod
-    def createEnigmaIntoKey(key: str, seed: str="x(ГkшЪ+4sЩJpШ)0,хRCЕD`ьQEрP2уйXыj.HЙGгЖж*фЭzhfgч№VFтцСtмнХ ЗТ}KЛ%»-Y1ПУ{кMНв3!oZепД;ЦS7:iu#яcЮmO]dОАзъ@8бБqлР/о'«9ЧvAщynЬbЁ[UаI~LewюКэaМд56B&TWФиЯЫё^ВNсrlИ=") -> "Enigma":
+    def createEnigmaIntoKey(key: str, seed: str = "x(ГkшЪ+4sЩJpШ)0,хRCЕD`ьQEрP2уйXыj.HЙGгЖж*фЭzhfgч№VFтцСtмнХ ЗТ}KЛ%»-Y1ПУ{кMНв3!oZепД;ЦS7:iu#яcЮmO]dОАзъ@8бБqлР/о'«9ЧvAщynЬbЁ[UаI~LewюКэaМд56B&TWФиЯЫё^ВNсrlИ=") -> "Enigma":
 
         if len(set(key)) < 3:
             raise Exception("Бессмысленно строить ключи меньше трёх")
@@ -170,15 +170,13 @@ class Enigma:
         alphabets = [alphabet]
         index = 0
         flag = True
-
+        summ = summ * 9 
         while flag:
 
             testTmp = ""
             
             for c in range(sizeAlphabet):
                 testTmp += trash[(summ + index )% len(trash)]
-                summ = summ * 9 + 2
-                trash = Enigma.__swapLettersInText(trash, summ % len(trash), index % len(trash))
                 index += 1
             index -= sizeAlphabet - 1
 
