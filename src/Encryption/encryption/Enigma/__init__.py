@@ -1,7 +1,7 @@
 from .Enigma import Enigma
-from .Roter import Roter
+from .Rotor import Rotor
 
-__all__ = ['Enigma', 'Roter']
+__all__ = ['Enigma', 'Rotor']
 
 __version__ = '0.1'
 __author__ = 'Njall'

@@ -1,29 +1,32 @@
 import argparse
 
+from typing import Dict
+
 import src.Encryption.encryption.Enigma as En
 
 STANDART_SEED="x(ГkшЪ+4sЩJpШ)0,хRCЕD`ьQEрP2уйXыj.HЙGгЖж*фЭzhfgч№VFтцСtмнХ ЗТ}KЛ%»-Y1ПУ{кMНв3!oZепД;ЦS7:iu#яcЮmO]dОАзъ@8бБqлР/о'«9ЧvAщynЬbЁ[UаI~LewюКэaМд56B&TWФиЯЫё^ВNсrlИ="
 
-def main():
-
-
-    parser = argparse.ArgumentParser(description='Программма для шифрации Энигмой по ключу')
-
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-k', '--key', type=str, help='Ключ для текста(случайный набор символов)')
-    group.add_argument('-pk', '--pathKey', type=str, help='Путь к файлу для текста')
-
-    parser.add_argument('-x', '--fileToText', type=str, help='Путь к файлу текста')
-    parser.add_argument('-o', '--fileForExport', type=str, help='Название файла вывода(перезапишет существующий)')
-    parser.add_argument('--translate', type=bool, default=False, help='Шифровать текст')
-    parser.add_argument('-e', '--exportKeyTxt', type=str, help="Экспорт ключа в файл")
+def generateCommand(parser: argparse.ArgumentParser):
     
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-k', '--key', type=str, help='Key for text (random set of characters)')
+    group.add_argument('-pk', '--pathKey', type=str, help='Path to the file for text')
+
+    parser.add_argument('-x', '--fileToText', type=str, help='Path to the text file')
+    parser.add_argument('-o', '--fileForExport', type=str, help='Output file name (will overwrite existing)')
+    parser.add_argument('--translate', type=bool, default=False, help='Encrypt text')
+    parser.add_argument('-e', '--exportKeyTxt', type=str, help="Export key to file")
+
     group2 = parser.add_mutually_exclusive_group(required=True)
-    group2.add_argument('-s', '--seed', type=str, help="Зерно для генерации ключа")
-    group2.add_argument('-sft', '--seedFileTxt', type=str, help="Зерно для генерации ключа в файле")
+    group2.add_argument('-s', '--seed', type=str, help="Seed for key generation")
+    group2.add_argument('-sft', '--seedFileTxt', type=str, help="Seed for key generation in a file")
+    
+    return
 
+def getArgs(parser: argparse.ArgumentParser) -> dict:
+    
     args = parser.parse_args()
-
+    
     with open(args.fileToText, 'r') as f:
         text = f.read()
         
@@ -41,21 +44,40 @@ def main():
         with open(args.pathKey, 'r') as f:
             key = f.read()
     
-    en = En.Enigma.createEnigmaIntoKey(key=key, seed=seed)
+    translate = parser.parse_args().translate
+    exportKey = parser.parse_args().exportKeyTxt
+    return {"text": text, "seed": seed, "key": key, "translate" : translate, "export": exportKey}
 
-    if args.translate:
-        cihep = en.translateUpdateRotors(text)
+
+def main():
+
+
+    parser = argparse.ArgumentParser(description='Program for encrypting with Enigma using a key')
+
+    generateCommand(parser)
+
+
+    args = getArgs(parser)
+    
+    en = En.Enigma.createEnigmaIntoKey(key=args["key"], seed=args["seed"])
+
+    if args["translate"]:
+        cihep = en.translateUpdateRotors(args["text"])
     else:
-        cihep = en.encryptUpdateRotors(text)
+        cihep = en.encryptUpdateRotors(args["text"])
+    
+    if args["export"]:
+        with open(args["export"], 'w') as file:
+            file.write(args["export"])
 
-    if args.exportKeyTxt:
-        with open(args.exportKeyTxt, 'w') as file:
-            file.write(args.exportKeyTxt)
-
-    with open(args.fileForExport, 'w') as file:
+    with open(parser.parse_args().fileForExport, 'w') as file:
         file.write(cihep)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        print("Ошибка: " + e)
+        
 

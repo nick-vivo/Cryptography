@@ -1,147 +1,30 @@
 import os
 import json
+
 from typing import List, Dict
 
 
 class D_ReplaceOneLetter:
     """
-    Класс для взлома шифра замены одной буквы и его производных.
-    ...
-    Атрибуты
-    --------
-    _text : str
-        Содержит текст для работы. Нужен для удобства
-    Методы
-    ------
-    changeText(text: str):
-        Изменить текст для работы.
-    
-    @staticmethod 
-    analysisText_s(text: str) -> dict:
-        Возвращает словарь частот для данного текста. Будет отсортирован по символам
-
-    analysisText(self) -> dict:
-        Возвращает словарь частот для данного текста. Будет отсортирован по символам. Работает с атрибутом _text
-
-    @staticmethod
-    sortDictValues_s(dictionary: dict) -> dict:
-        Сортировка словаря по значениям частот, где первая буква - максимальная частота в тексте
-    
-    @staticmethod
-    analysisTextAndSortFrequency_s(text: str) -> dict:
-        Вернёт уже отсортированный словарь букв - частот, где первая буква - максимальная частота в тексте.
-
-    analysisTextAndSortFrequency(self) -> dict:
-        Вернёт уже отсортированный словарь букв - частот, где первая буква - максимальная частота в тексте. Работает с атрибутом _text.
-
-    @staticmethod
-    sizeAlphabet_s(text: str) -> int:
-        Вернёт размер алфавита по тексту.
-
-    sizeAlphabet(self) -> int:
-        Вернёт размер алфавита по тексту. Работает с атрибутом _text.
-
-    @staticmethod
-    getTranslateDictSortFrequency_s(text: str, testAlphabet: str) -> dict:
-        Объединяет словарь частот и вводимый алфавит. Самая частая буква должа быть первой в testAlphabet.
-    
-    getTranslateDictFrequency(self, testAlphabet: str) -> dict:
-        Объединяет словарь частот и вводимый алфавит. Самая частая буква должа быть первой в testAlphabet. Работает с атрибутом _test.
-
-    @staticmethod
-    getTranslateDictSortAlphabet_s(text: str, testAlphabet: str) -> dict:
-        Объединяет алфавит text, полученный функцией sorted и вводимый алфавит. Самая первая буква алфавита должа быть первой в testAlphabet. 
-
-    getTranslateDictSortAlphabet(text: str, testAlphabet: str) -> dict:
-        Объединяет алфавит text, полученный функцией sorted и вводимый алфавит. Самая первая буква алфавита должа быть первой в testAlphabet. Работает с атрибутом _text  
-
-    @staticmethod
-    __translate(text: str, dictionary: dict) -> str:
-        Переводит текст по словарю.
-
-    @staticmethod
-    decryptionSortAlphabet_s(text: str, key: str) -> str:
-        Функция для расшифровки текста по тестовому словарю - key. Все буквы поставятся в соответствии алфавиту текста(сам создаст алфавит на основании sorted()). Для примера словаря смотри функцию getTranslateDictAlphabet(...)
-
-    decryptionSortAlphabet(self, key: str) -> str:
-        Функция для расшифровки текста по тестовому словарю - key. Все буквы поставятся в соответствии алфавиту текста(сам создаст алфавит на основании sorted()). Для примера словаря смотри функцию getTranslateDictAlphabet(...). Работает с атрибутом _text  
-    
-    @staticmethod
-    decryptionSortFrequency_s(text: str, key: str) -> str:
-        Функция для расшифровки текста по тестовому словарю - key. Все буквы поставятся в соответствии частоте буквам текста(сам создаст алфавит на основании частот). Для примера словаря смотри функцию getTranslateDictFrequency(...). 
-    
-    decryptionFrequency(text: str, key: str) -> str:
-        Функция для расшифровки текста по тестовому словарю - key. Все буквы поставятся в соответствии частоте буквам текста(сам создаст алфавит на основании частот). Для примера словаря смотри функцию getTranslateDictFrequency(...). Работает с атрибутом _text  
-        
-    @staticmethod
-    splitText(text: str, delimiters: list) -> list:
-        Разделяет текст на слова, где разделители удаляются.
-
-    @staticmethod
-    splitTextBySize_s(text: str, delimiters: list, size: int) -> list:
-        Разделяет текст на слова, где разделители удаляются. Остаются только слова размером size
-
-    splitTextBySize(self, delimiters: list, size: int) -> list:
-        Разделяет текст на слова, где разделители удаляются. Остаются только слова размером size. Работает с атрибутом _text.
-
-    @staticmethod
-    swapLettersInTestAlphabet(testAlphabet: str, letter_1: str, letter_2: set) -> str:
-        Меняет местами символы алфавита. Нужно чтобы алфавит соотвествовал некоторым критериям.
-    
-    @staticmethod
-    countWordSizeInText_s(text: str, delimiters: list, size: int) -> int:
-        Находит количество слов размером size.
-    
-    countWordSizeInText(self, delimiters: list, size: int) -> int:
-        Находит количество слов размером size. Работает с атрибутом _text
-
-    @staticmethod
-    wordSizeInTextFrequency_s(text: str, delimiters: list, size: int) -> float:
-        Возвращает частотность слов размером size. 
-
-    wordSizeInTextFrequency_s(self, delimiters: list, size: int) -> float:
-        Возвращает частотность слов размером size. Работает с атрибутом _text.
-
-    @staticmethod
-    swapSetCharacters(testAlphabet: str, set_1: str, set_2: str) -> str:
-        Меняет местами определнное количество символов в алфавите. По сути расширение для swapLettersInTestAlphabet(...).
+    Class for text analysis and manipulation.
     """
     
     def __init__(self, text: str):
         """
-        Устанавливает все необходимые атрибуты для объекта D_ReplaceOneLetter.
-        Параметры
-        ---------
-        _text : str
-                Текст для расшифровки
+        Initialize with the provided text.
 
-        Исключения
-        ----------
-        None
-
-        Возвращаемое значение
-        ---------------------
-        None
+        Parameters:
+        - text (str): The text to be analyzed and manipulated.
         """
         self._text = text
         pass
     
     def changeText(self, text: str):
         """
-        Меняет текст класса на другой. Уже новый текст будет использоваться для расшифровки.
-        Параметры
-        ---------
-        text : str
-            Текст на замену для атрибута _text.
+        Change the current text to the new provided text.
 
-        Исключения
-        ----------
-        None
-
-        Возвращаемое значение
-        ---------------------
-        None
-
+        Parameters:
+        - text (str): The new text to replace the current text.
         """
         self._text = text
         pass
@@ -150,21 +33,13 @@ class D_ReplaceOneLetter:
     @staticmethod
     def analysisText_s(text: str) -> dict:
         """
-        Анализирует текст и возвращает словарь частот текста. Поиск словаря происходит по символу.
-        
-        Параметры
-        ---------
-        text : str
-            Текст для анализа. Так как функция статическая
-        
-        Исключения
-        ----------
-        None
+        Analyze the frequency of each letter in the text.
 
-        Возвращаемое значение
-        ---------------------
-        Неотсортированный словарь частот символов текста
+        Parameters:
+        - text (str): The text to analyze.
 
+        Returns:
+        - dict: A dictionary containing the frequency of each letter in the text.
         """
         size = len(text)
         alphabet = sorted(set(text))
@@ -177,19 +52,10 @@ class D_ReplaceOneLetter:
     
     def analysisText(self) -> dict:
         """
-        Анализирует текст и возвращает словарь частот текста. Работает с атрибутом _text
-        
-        Параметры
-        ---------
-        None
+        Analyze the frequency of each letter in the stored text.
 
-        Исключения
-        ----------
-        None
-        
-        Возвращаемое значение
-        ---------------------
-        Неотсортированный словарь частот символов текста _text
+        Returns:
+        - dict: A dictionary containing the frequency of each letter in the stored text.
         """
         return D_ReplaceOneLetter.analysisText_s(self._text)
     
@@ -197,105 +63,61 @@ class D_ReplaceOneLetter:
     @staticmethod
     def sortDictValues_s(dictionary: dict) -> dict:
         """
-        Сортирует словарь по частотам из функций analysisText_s и analisysText. Нужно для остальных функций.
-        
-        Параметры
-        ---------
-        dictionary: dict
-            Неотсортированный словарь частот
-    
-        Исключения
-        ----------
-        None
+        Sort a dictionary by its values in descending order.
 
-        Возвращаемое значение
-        ---------------------
-        Отсортированный словарь частот символов.
+        Parameters:
+        - dictionary (dict): The dictionary to be sorted.
+
+        Returns:
+        - dict: The sorted dictionary based on values in descending order.
         """
         newDict = dict(reversed(sorted(dictionary.items(), key=lambda x: x[1])))
-
         return newDict
     
     
     @staticmethod
     def analysisTextAndSortFrequency_s(text: str) -> dict:
         """
-        Анализирует текст и возвращает отсортированный словарь частот текста
-        
-        Параметры
-        ---------
-        text : str
-            Текст для анализа
+        Analyze text and sort the frequency of letters.
 
-        Исключения
-        ----------
-        None
+        Parameters:
+        - text (str): The text to analyze and sort.
 
-        Возвращаемое значение
-        ---------------------
-        Отсортированный словарь частот символов текста text
+        Returns:
+        - dict: A dictionary of letters sorted by frequency.
         """
         return D_ReplaceOneLetter.sortDictValues_s(D_ReplaceOneLetter.analysisText_s(text))
     
 
     def analysisTextAndSortFrequency(self) -> dict:
         """
-        Анализирует текст и возвращает отсортированный словарь частот текста
-        
-        Параметры
-        ---------
-        None
+        Analyze stored text and sort the frequency of letters.
 
-        Исключения
-        ----------
-        None
-
-        Возвращаемое значение
-        ---------------------
-        Отсортированный словарь частот символов текста text. Работает с атрибутом _text
+        Returns:
+        - dict: A dictionary of letters sorted by frequency.
         """
         return D_ReplaceOneLetter.sortDictValues_s(D_ReplaceOneLetter.analysisText_s(self._text))
     
 
-    # def analysisText(self) -> dict:
-        
-    #     return D_ReplaceOneLetter.analysisText_s(self._text)
-
     @staticmethod
     def sizeAlphabet_s(text: str) -> int:
         """
-        Возвращает размер алфавита текста
-        
-        Параметры
-        ---------
-        text : str
-            Текст для анализа
+        Calculate the size of the alphabet in the text.
 
-        Исключения
-        ----------
-        None
+        Parameters:
+        - text (str): The text to determine the alphabet size.
 
-        Возвращаемое значение
-        ---------------------
-        Размер алфавита
+        Returns:
+        - int: The size of the alphabet in the text.
         """
         return len(set(text))
     
     def sizeAlphabetText(self) -> int:
         """
-        Возвращает размер алфавита текста. Работает с атрибутом _text
-        
-        Параметры
-        ---------
-        None
-        
-        Исключения
-        ----------
-        None
+        Calculate the size of the alphabet in the stored text.
 
-        Возвращаемое значение
-        ---------------------
-        Размер алфавита
+        Returns:
+        - int: The size of the alphabet in the stored text.
         """
         return len(set(self._text))
 
@@ -303,25 +125,14 @@ class D_ReplaceOneLetter:
     @staticmethod
     def getTranslateDictSortFrequency_s(text: str, testAlphabet: str) -> dict:
         """
-        Функция создаёт алфавит текста и объединяет его с тестовым алфавитом. 
-        Символы сопоставляются по частотности в текста. На первой букве
-        тестового алфавита должны быть символы встречающиеся чаще всего
-        
-        Параметры
-        ---------
-        text : str
-            Текст для обработки
-        testAlphabet: str
-            Алфавит для построения словаря
-        
-        Исключения
-        ----------
-        1. Размеры алфавитов текста и тестового алфавита должны совпадать 
-        2. В тестовом алфавите должны быть уникальные значения, так как это моноалфавитная замена.
-        
-        Возвращаемое значение
-        ---------------------
-        Новый словарь отсортированный по частотам. **Используется для замены символов текста
+        Generate a translation dictionary based on the frequency of letters.
+
+        Parameters:
+        - text (str): The text to analyze for translation.
+        - testAlphabet (str): The alphabet to translate to.
+
+        Returns:
+        - dict: A translation dictionary based on letter frequency.
         """
         sizeAlphabet = D_ReplaceOneLetter.sizeAlphabet_s(text)
         sizeTestAlphabet = len(set(testAlphabet))
@@ -341,23 +152,13 @@ class D_ReplaceOneLetter:
     
     def getTranslateDictFrequency(self, testAlphabet: str) -> dict:
         """
-        Функция создаёт алфавит атрибута _text и объединяет его с тестовым алфавитом. 
-        Символы сопоставляются по частотности в текста. На первой букве
-        тестового алфавита должны быть символы встречающиеся чаще всего
-        
-        Параметры
-        ---------
-        testAlphabet: str
-            Алфавит для построения словаря
-        
-        Исключения
-        ----------
-        1. Размеры алфавитов текста и тестового алфавита должны совпадать 
-        2. В тестовом алфавите должны быть уникальные значения, так как это моноалфавитная замена.
-        
-        Возвращаемое значение
-        ---------------------
-        Новый словарь отсортированный по частотам. **Используется для замены символов текста
+        Generate a translation dictionary for the stored text based on frequency.
+
+        Parameters:
+        - testAlphabet (str): The alphabet to translate to.
+
+        Returns:
+        - dict: A translation dictionary based on letter frequency.
         """
         return D_ReplaceOneLetter.getTranslateDictSortFrequency_s(self._text, testAlphabet)
 
@@ -365,26 +166,14 @@ class D_ReplaceOneLetter:
     @staticmethod
     def getTranslateDictSortAlphabet_s(text: str, testAlphabet: str) -> dict:
         """
-        Функция создаёт алфавит текста и объединяет его с тестовым алфавитом. 
-        Символы сопоставляются по алфавиту в текста(с помощью функции sorted()). На первой букве
-        тестового алфавита должны быть символы которые сопоставятся с первой буквой текстового 
-        алфавита
-        
-        Параметры
-        ---------
-        text : str
-            Текст для обработки
-        testAlphabet: str
-            Алфавит для построения словаря
-        
-        Исключения
-        ----------
-        1. Размеры алфавитов текста и тестового алфавита должны совпадать 
-        2. В тестовом алфавите должны быть уникальные значения, так как это моноалфавитная замена.
-        
-        Возвращаемое значение
-        ---------------------
-        Новый словарь отсортированный по алфавиту. **Используется для получения ключа.
+        Generate a translation dictionary based on the order of letters in the alphabet.
+
+        Parameters:
+        - text (str): The text to analyze for translation.
+        - testAlphabet (str): The alphabet to translate to.
+
+        Returns:
+        - dict: A translation dictionary based on the order of letters in the alphabet.
         """
         sizeAlphabet = D_ReplaceOneLetter.sizeAlphabet_s(text)
         sizeTestAlphabet = len(set(testAlphabet))
@@ -404,25 +193,13 @@ class D_ReplaceOneLetter:
 
     def getTranslateDictAlphabet(self, testAlphabet: str) -> dict:
         """
-        Функция создаёт алфавит атрибута _text и объединяет его с тестовым алфавитом. 
-        Символы сопоставляются по алфавиту в текста(с помощью функции sorted()). На первой букве
-        тестового алфавита должны быть символы которые сопоставятся с первой буквой текстового 
-        алфавита
-        
-        Параметры
-        ---------
-        testAlphabet: str
-            Алфавит для построения словаря
-        
-        Исключения
-        ----------
-        1. Размеры алфавитов текста и тестового алфавита должны совпадать 
-        2. В тестовом алфавите должны быть уникальные значения, так как это 
-        моноалфавитная замена.
-        
-        Возвращаемое значение
-        ---------------------
-        Новый словарь отсортированный по алфавиту. **Используется для получения ключа.
+        Generate a translation dictionary for the stored text based on alphabet order.
+
+        Parameters:
+        - testAlphabet (str): The alphabet to translate to.
+
+        Returns:
+        - dict: A translation dictionary based on the order of letters in the alphabet.
         """
         return D_ReplaceOneLetter.getTranslateDictSortAlphabet_s(self._text, testAlphabet)
 
@@ -430,26 +207,14 @@ class D_ReplaceOneLetter:
     @staticmethod
     def __translate(text: str, dictionary: dict) -> str:
         """
-        Переводит весь текст по введённому словарю.
+        Translate text using the provided dictionary.
 
-        Параметры
-        ---------
-        text : str
-            Текст для обработки
-        dictionary : dict
-            Словарь для перевода
-        
-        Исключения
-        ----------
-        None
+        Parameters:
+        - text (str): The text to be translated.
+        - dictionary (dict): The translation dictionary.
 
-        **Проверок на правильность 
-        словаря и тд нету, так как функция скрыта от пользователя. Проверки
-        производятся в основных функциях
-        
-        Возвращаемое значение
-        ---------------------
-        Переведённый с помощью словаря текст
+        Returns:
+        - str: The translated text based on the dictionary.
         """
         translate = ""
         for i in text:
@@ -460,48 +225,28 @@ class D_ReplaceOneLetter:
     @staticmethod
     def decryptionSortAlphabet_s(text: str, key: str) -> str:
         """
-        Расшифровывает весь текст по введённому ключу. Ключом служит уже
-        обработанный словарь. Символы в ключе должны быть в алфавитном для
-        текста порядке. Сначала сортируется словарь текста, потом строиться
-        расшифровка
+        Decrypt the text based on an input key using alphabet order.
 
-        Параметры
-        ---------
-        text : str
-            Текст для расшифровки
-        key : str
-            Ключ, состоящий из символов.
-        
-        Исключения
-        ----------
-        1. getTranslateDictSortAlphabet_s(...).
+        Parameters:
+        - text (str): The text to decrypt.
+        - key (str): The key to decrypt the text.
 
-        Возвращаемое значение
-        ---------------------
-        Расшифрованный текст.
+        Returns:
+        - str: The decrypted text based on the key and alphabet order.
         """
+
         dictionary = D_ReplaceOneLetter.getTranslateDictSortAlphabet_s(text, key)
         return D_ReplaceOneLetter.__translate(text, dictionary)
 
     def decryptionSortAlphabet(self, key: str) -> str:
         """
-        Расшифровывает весь текст атрибута _text по введённому ключу. Ключом служит уже
-        обработанный словарь. Символы в ключе должны быть в алфавитном для
-        текста порядке. Сначала сортируется словарь текста, потом строиться
-        расшифровка
+        Decrypt the stored text based on an input key using alphabet order.
 
-        Параметры
-        ---------
-        key : str
-            Ключ, состоящий из символов.
-        
-        Исключения
-        ----------
-        1. getTranslateDictSortAlphabet_s(...).
+        Parameters:
+        - key (str): The key to decrypt the stored text.
 
-        Возвращаемое значение
-        ---------------------
-        Расшифрованный текст атрибута _text.
+        Returns:
+        - str: The decrypted text based on the key and alphabet order.
         """
         return D_ReplaceOneLetter.decryptionSortAlphabet_s(self._text, key)
 
@@ -509,74 +254,41 @@ class D_ReplaceOneLetter:
     @staticmethod
     def decryptionSortFrequency_s(text: str, key: str) -> str:
         """
-        Расшифровывает весь текст по введённому ключу. Ключом служит уже
-        обработанный вами словарь, чтобы потом поставить их в соотвествии с 
-        частотами. Символы в ключе должны быть в частотном порядке появления
-        в тексте. Сначала сортируется словарь текста, потом строиться
-        расшифровка
+        Decrypt the text based on an input key using frequency-based translation.
 
-        Параметры
-        ---------
-        text : str
-            Текст для расшифровки
-        key : str
-            Ключ, состоящий из символов.
-        
-        Исключения
-        ----------
-        1. getTranslateDictSortFrequency_s(...).
+        Parameters:
+        - text (str): The text to decrypt.
+        - key (str): The key to decrypt the text.
 
-        Возвращаемое значение
-        ---------------------
-        Расшифрованный текст.
+        Returns:
+        - str: The decrypted text based on the key and frequency-based translation.
         """
         dictionary = D_ReplaceOneLetter.getTranslateDictSortFrequency_s(text, key)
         return D_ReplaceOneLetter.__translate(text, dictionary)
         
     def decryptionSortFrequency(self, key: str) -> str:
         """
-        Расшифровывает весь текст атрибута _text по введённому ключу. 
-        Ключом служит уже обработанный вами словарь, чтобы потом поставить 
-        их в соотвествии с частотами. Символы в ключе должны быть в частотном 
-        порядке появления в тексте. Сначала сортируется словарь текста, потом 
-        строиться расшифровка
+        Decrypt the stored text based on an input key using frequency-based translation.
 
-        Параметры
-        ---------
-        text : str
-            Текст для расшифровки
-        key : str
-            Ключ, состоящий из символов.
-        
-        Исключения
-        ----------
-        1. getTranslateDictSortFrequency_s(...).
+        Parameters:
+        - key (str): The key to decrypt the stored text.
 
-        Возвращаемое значение
-        ---------------------
-        Расшифрованный текст атрибута _text
+        Returns:
+        - str: The decrypted text based on the key and frequency-based translation.
         """
         return D_ReplaceOneLetter.decryptionSortFrequency_s(self._text, key)
 
     @staticmethod
     def splitText(text: str, delimiters: list) -> list:
         """
-        Делит текст на слова. Разделителями служит список значений
+        Split the text into words based on provided delimiters.
 
-        Параметры
-        ---------
-        text : str
-            Текст для обаботки
-        delimetrs : list
-            Список разделителей.
-        
-        Исключения
-        ----------
-        1. Список delimetrs пуст
+        Parameters:
+        - text (str): The text to split.
+        - delimiters (list): List of delimiters to use for splitting.
 
-        Возвращаемое значение
-        ---------------------
-        Список слов.
+        Returns:
+        - list: A list of words obtained after splitting the text.
         """
         if len(delimiters) < 1:
             Exception("Doesn't have delimetrs")
@@ -590,23 +302,15 @@ class D_ReplaceOneLetter:
     @staticmethod
     def splitTextBySize_s(text: str, delimiters: list, size: int) -> list:
         """
-        Делит текст на слова и оставляет только слова размером size. Разделителями служит список значений. 
+        Split the text into words of a specific size.
 
-        Параметры
-        ---------
-        text : str
-            Текст для расшифровки
-        delimetrs : list
-            Список разделителей.
-        size : int
-            Размеры слов.        
-        Исключения
-        ----------
-        1. splitText(...)
+        Parameters:
+        - text (str): The text to split.
+        - delimiters (list): List of delimiters to use for splitting.
+        - size (int): The size of words to filter.
 
-        Возвращаемое значение
-        ---------------------
-        Список слов размером size
+        Returns:
+        - list: A list of words from the text with the specified size.
         """
         words = D_ReplaceOneLetter.splitText(text, delimiters)
         filtered_words = [word for word in words if len(word) == size]
@@ -615,48 +319,29 @@ class D_ReplaceOneLetter:
     
     def splitTextBySize(self, delimiters: list, size: int) -> list:
         """
-        Делит текст на слова и оставляет только слова размером size. Разделителями служит список значений. Работает с атрибутом size.
+        Split the stored text into words of a specific size.
 
-        Параметры
-        ---------
-        delimetrs : list
-            Список разделителей.
-        size : int
-            Размеры слов.        
-        Исключения
-        ----------
-        1. splitText(...)
+        Parameters:
+        - delimiters (list): List of delimiters to use for splitting.
+        - size (int): The size of words to filter.
 
-        Возвращаемое значение
-        ---------------------
-        Список слов размером size
+        Returns:
+        - list: A list of words from the stored text with the specified size.
         """
         return D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size) 
         
     @staticmethod
     def swapLettersInTestAlphabet(testAlphabet: str, letter_1: str, letter_2: set) -> str:
         """
-        Меняет местами буквы в тестовом алфавите. 
-        
-        Параметры
-        ---------
-        testAlphabet : str
-            Алфавит в котором меняют буквы
-        letter_1 : str
-            Первая буква.
-        letter_2 : str
-            Вторая буква.
-                
-        Исключения
-        ----------
-        1. Алфавит не является алфавитом, а набором символов.
-        2. letter_1 и letter_2 не являются буквами, а набором символов или 
-        вовсе пусты.
-        3. letter_1 и letter_2 не являются частью алфавита.
+        Swap two letters in the test alphabet.
 
-        Возвращаемое значение
-        ---------------------
-        Алфавит с изменённой парой символов.
+        Parameters:
+        - testAlphabet (str): The test alphabet to perform the swap.
+        - letter_1 (str): The first letter to swap.
+        - letter_2 (str): The second letter to swap.
+
+        Returns:
+        - str: The new test alphabet after swapping letters.
         """
         if len(set(testAlphabet)) != len(testAlphabet) or len(letter_1) != 1 \
             or len(letter_2) != 1 or not (letter_1 in testAlphabet) or not \
@@ -678,90 +363,57 @@ class D_ReplaceOneLetter:
     @staticmethod
     def countWordSizeInText_s(text: str, delimiters: list, size: int) -> int:
         """
-        Функция для вычисления количества слова размером size в тексте.
-        
-        Параметры
-        ---------
-        text : str
-            Текст для анализа.
-        delimeters : list
-            Список разделителей.
-        size : int
-            Размеры слов
-                
-        Исключения
-        ----------
-        1. splitText(...)
+        Count the number of words of a specific size in the text.
 
-        Возвращаемое значение
-        ---------------------
-        Количество слов размером size
+        Parameters:
+        - text (str): The text to analyze.
+        - delimiters (list): List of delimiters to use for word separation.
+        - size (int): The size of words to count.
+
+        Returns:
+        - int: The number of words of the specified size in the text.
         """
+
         return len(D_ReplaceOneLetter.splitTextBySize_s(text, delimiters, size))
     
     def countWordSizeInText(self, delimiters: list, size: int) -> int:
         """
-        Функция для вычисления количества слова размером size в тексте атрибута _text.
-        
-        Параметры
-        ---------
-        delimeters : list
-            Список разделителей.
-        size : int
-            Размеры слов
-                
-        Исключения
-        ----------
-        1. splitText(...)
+        Count the number of words of a specific size in the stored text.
 
-        Возвращаемое значение
-        ---------------------
-        Количество слов размером size
+        Parameters:
+        - delimiters (list): List of delimiters to use for word separation.
+        - size (int): The size of words to count.
+
+        Returns:
+        - int: The number of words of the specified size in the stored text.
         """
         return len(D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size))
     
     @staticmethod
     def wordSizeInTextFrequency_s(text: str, delimiters: list, size: int) -> float:
         """
-        Вычисляет частоту встречаемости слов размером size в тексте.
-        
-        Параметры
-        ---------
-        text : str
-            Текст для обработки
-        delimeters : list
-            Список разделителей.
-        size : int
-            Размеры слов
-                
-        Исключения
-        ----------
-        1. splitText(...)
+        Calculate the frequency of words of a specific size in the text.
 
-        Возвращаемое значение
-        ---------------------
-        Частота встречаемости слов размером size
+        Parameters:
+        - text (str): The text to analyze.
+        - delimiters (list): List of delimiters to use for word separation.
+        - size (int): The size of words to consider for frequency.
+
+        Returns:
+        - float: The frequency of words of the specified size in the text.
         """
         return len(D_ReplaceOneLetter.splitTextBySize_s(text, delimiters, size)) / len(D_ReplaceOneLetter.splitText(text, delimiters))
     
     def wordSizeInTextFrequency(self, delimiters: list, size: int) -> float:
         """
-        Вычисляет частоту встречаемости слов размером size в тексте атрибута _text. 
-        
-        Параметры
-        ---------
-        delimeters : list
-            Список разделителей.
-        size : int
-            Размеры слов
-                
-        Исключения
-        ----------
-        1. splitText(...)
+        Calculate the frequency of words of a specific size in the stored text.
 
-        Возвращаемое значение
-        ---------------------
-        Частота встречаемости слов размером size
+        Parameters:
+        - delimiters (list): List of delimiters to use for word separation.
+        - size (int): The size of words to consider for frequency.
+
+        Returns:
+        - float: The frequency of words of the specified size in the stored text.
         """
         return len(D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size)) / len(D_ReplaceOneLetter.splitText(self._text, delimiters))
 
@@ -769,25 +421,15 @@ class D_ReplaceOneLetter:
     @staticmethod
     def swapSetCharacters(testAlphabet: str, set_1: str, set_2: str) -> str:
         """
-        Меняет местами набор символов в тестовом алфавите. 
-        
-        Параметры
-        ---------
-        testAlphabet : str
-            Алфавит в котором меняют буквы
-        set_1 : str
-            Первый набор.
-        set_2 : str
-            Второй набор.
-                
-        Исключения
-        ----------
-        1. Размеры наборов не совпадают. Также алфавиты этих наборов не совпадают.
-        2. swapLettersInTestAlphabet(...)
+        Swap sets of characters in the test alphabet.
 
-        Возвращаемое значение
-        ---------------------
-        Алфавит с изменённым набором символов.
+        Parameters:
+        - testAlphabet (str): The test alphabet to perform the swap.
+        - set_1 (str): The first set of characters to swap.
+        - set_2 (str): The second set of characters to swap.
+
+        Returns:
+        - str: The new test alphabet after swapping sets of characters.
         """
         if len(set(set_1)) != len(set(set_2)) or len(set_1) != len(set_2):
 
@@ -805,7 +447,20 @@ class D_ReplaceOneLetter:
                        fileForExport: str="key_alphabet.json", 
                        nameForHeaderKey:str = "key", 
                        nameForHeaderAlphabet:str = "alphabet") -> None:
-        
+        """
+        Export the translation key and alphabet frequency to a JSON file.
+
+        Parameters:
+        - alphabetFrequency (str): The alphabet frequency for translation.
+        - fileForExport (str): The file name for exporting the JSON (default: "key_alphabet.json").
+        - nameForHeaderKey (str): The header name for the translation key (default: "key").
+        - nameForHeaderAlphabet (str): The header name for the alphabet (default: "alphabet").
+
+        Raises:
+        - Exception: If the file for export already exists.
+
+        Writes the translation key and alphabet frequency information toa JSON file in the specified format.
+        """
         if os.path.isfile(fileForExport):
             raise Exception(f"{fileForExport} уже существует")
             
