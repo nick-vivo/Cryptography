@@ -4,7 +4,7 @@ import json
 from typing import List, Dict
 
 
-class D_ReplaceOneLetter:
+class DecryptorReplaceOneLetter:
     """
     Class for text analysis and manipulation.
     """
@@ -19,7 +19,7 @@ class D_ReplaceOneLetter:
         self._text = text
         pass
     
-    def changeText(self, text: str):
+    def change_text(self, text: str):
         """
         Change the current text to the new provided text.
 
@@ -31,7 +31,7 @@ class D_ReplaceOneLetter:
     
 
     @staticmethod
-    def analysisText_s(text: str) -> dict:
+    def analysis_text_s(text: str) -> dict:
         """
         Analyze the frequency of each letter in the text.
 
@@ -39,7 +39,8 @@ class D_ReplaceOneLetter:
         - text (str): The text to analyze.
 
         Returns:
-        - dict: A dictionary containing the frequency of each letter in the text.
+        - dict: A dictionary containing the frequency of each letter in the 
+        text.
         """
         size = len(text)
         alphabet = sorted(set(text))
@@ -50,18 +51,19 @@ class D_ReplaceOneLetter:
             frequency[letter] = text.count(letter) / size
         return frequency
     
-    def analysisText(self) -> dict:
+    def analysis_text(self) -> dict:
         """
         Analyze the frequency of each letter in the stored text.
 
         Returns:
-        - dict: A dictionary containing the frequency of each letter in the stored text.
+        - dict: A dictionary containing the frequency of each letter in the   
+        stored text.
         """
-        return D_ReplaceOneLetter.analysisText_s(self._text)
+        return DecryptorReplaceOneLetter.analysis_text_s(self._text)
     
 
     @staticmethod
-    def sortDictValues_s(dictionary: dict) -> dict:
+    def sort_dict_values_s(dictionary: dict) -> dict:
         """
         Sort a dictionary by its values in descending order.
 
@@ -71,12 +73,13 @@ class D_ReplaceOneLetter:
         Returns:
         - dict: The sorted dictionary based on values in descending order.
         """
-        newDict = dict(reversed(sorted(dictionary.items(), key=lambda x: x[1])))
-        return newDict
+        new_dict = dict(reversed(sorted(dictionary.items(), 
+                                        key=lambda x: x[1])))
+        return new_dict
     
     
     @staticmethod
-    def analysisTextAndSortFrequency_s(text: str) -> dict:
+    def analysis_text_and_sort_frequency_s(text: str) -> dict:
         """
         Analyze text and sort the frequency of letters.
 
@@ -86,21 +89,23 @@ class D_ReplaceOneLetter:
         Returns:
         - dict: A dictionary of letters sorted by frequency.
         """
-        return D_ReplaceOneLetter.sortDictValues_s(D_ReplaceOneLetter.analysisText_s(text))
+        return DecryptorReplaceOneLetter.sort_dict_values_s(
+                                            DecryptorReplaceOneLetter.analysis_text_s(text))
     
 
-    def analysisTextAndSortFrequency(self) -> dict:
+    def analysis_text_and_sort_frequency(self) -> dict:
         """
         Analyze stored text and sort the frequency of letters.
 
         Returns:
         - dict: A dictionary of letters sorted by frequency.
         """
-        return D_ReplaceOneLetter.sortDictValues_s(D_ReplaceOneLetter.analysisText_s(self._text))
+        return DecryptorReplaceOneLetter.sort_dict_values_s(
+                                            DecryptorReplaceOneLetter.analysis_text_s(self._text))
     
 
     @staticmethod
-    def sizeAlphabet_s(text: str) -> int:
+    def size_alphabet_s(text: str) -> int:
         """
         Calculate the size of the alphabet in the text.
 
@@ -112,7 +117,7 @@ class D_ReplaceOneLetter:
         """
         return len(set(text))
     
-    def sizeAlphabetText(self) -> int:
+    def size_alphabet_text(self) -> int:
         """
         Calculate the size of the alphabet in the stored text.
 
@@ -123,85 +128,95 @@ class D_ReplaceOneLetter:
 
     
     @staticmethod
-    def getTranslateDictSortFrequency_s(text: str, testAlphabet: str) -> dict:
+    def get_translate_dict_sort_frequency_s(text: str, 
+                                            test_alphabet: str) -> dict:
         """
         Generate a translation dictionary based on the frequency of letters.
 
         Parameters:
         - text (str): The text to analyze for translation.
-        - testAlphabet (str): The alphabet to translate to.
+        - test_alphabet (str): The alphabet to translate to.
 
         Returns:
         - dict: A translation dictionary based on letter frequency.
         """
-        sizeAlphabet = D_ReplaceOneLetter.sizeAlphabet_s(text)
-        sizeTestAlphabet = len(set(testAlphabet))
+        size_alphabet = DecryptorReplaceOneLetter.size_alphabet_s(text)
+        size_test_alphabet = len(set(test_alphabet))
         
-        if sizeAlphabet != sizeTestAlphabet:
-            raise Exception(f"Your testAlphabet is very bad size Alphabet: {sizeAlphabet}, size test Alphabet: {sizeTestAlphabet}")
+        if size_alphabet != size_test_alphabet:
+            raise Exception(f"Your test_alphabet is very bad size Alphabet: {size_alphabet}, size test Alphabet: {size_test_alphabet}")
         
-        alphabet = list(D_ReplaceOneLetter.sortDictValues_s(D_ReplaceOneLetter.analysisText_s(text)).keys())
+        alphabet = list(DecryptorReplaceOneLetter.sort_dict_values_s(DecryptorReplaceOneLetter.analysis_text_s(text)).keys())
 
         translater = dict()
 
-        for index in range(sizeTestAlphabet):
+        for index in range(size_test_alphabet):
 
-            translater[alphabet[index]] = testAlphabet[index]
+            translater[alphabet[index]] = test_alphabet[index]
         
         return  translater
     
-    def getTranslateDictFrequency(self, testAlphabet: str) -> dict:
+    def get_translate_dict_frequency(self, 
+                                     test_alphabet: str) -> dict:
         """
-        Generate a translation dictionary for the stored text based on frequency.
+        Generate a translation dictionary for the stored text based on
+        frequency.
 
         Parameters:
-        - testAlphabet (str): The alphabet to translate to.
+        - test_alphabet (str): The alphabet to translate to.
 
         Returns:
         - dict: A translation dictionary based on letter frequency.
         """
-        return D_ReplaceOneLetter.getTranslateDictSortFrequency_s(self._text, testAlphabet)
+        return DecryptorReplaceOneLetter.get_translate_dict_sort_frequency_s(self._text,
+                                                                             test_alphabet)
 
 
     @staticmethod
-    def getTranslateDictSortAlphabet_s(text: str, testAlphabet: str) -> dict:
+    def get_translate_dict_sort_alphabet_s(text: str, 
+                                           test_alphabet: str) -> dict:
         """
-        Generate a translation dictionary based on the order of letters in the alphabet.
+        Generate a translation dictionary based on the order of letters in 
+        the alphabet.
 
         Parameters:
         - text (str): The text to analyze for translation.
-        - testAlphabet (str): The alphabet to translate to.
+        - test_alphabet (str): The alphabet to translate to.
 
         Returns:
-        - dict: A translation dictionary based on the order of letters in the alphabet.
+        - dict: A translation dictionary based on the order of letters in the
+        alphabet.
         """
-        sizeAlphabet = D_ReplaceOneLetter.sizeAlphabet_s(text)
-        sizeTestAlphabet = len(set(testAlphabet))
+        size_alphabet = DecryptorReplaceOneLetter.size_alphabet_s(text)
+        size_test_alphabet = len(set(test_alphabet))
         
-        if sizeAlphabet != sizeTestAlphabet:
-            raise Exception(f"Your testAlphabet is very bad size Alphabet: {sizeAlphabet}, size test Alphabet: {sizeTestAlphabet}")
+        if size_alphabet != size_test_alphabet:
+            raise Exception(f"Your test_alphabet is very bad size Alphabet: {size_alphabet}, size test Alphabet: {size_test_alphabet}")
         
         alphabet = sorted(set(text))
 
         translater = dict()
 
-        for index in range(sizeTestAlphabet):
+        for index in range(size_test_alphabet):
 
-            translater[alphabet[index]] = testAlphabet[index]
+            translater[alphabet[index]] = test_alphabet[index]
         
         return  translater
 
-    def getTranslateDictAlphabet(self, testAlphabet: str) -> dict:
+    def get_translate_dict_alphabet(self, test_alphabet: str) -> dict:
         """
-        Generate a translation dictionary for the stored text based on alphabet order.
+        Generate a translation dictionary for the stored text based on 
+        alphabet order.
 
         Parameters:
-        - testAlphabet (str): The alphabet to translate to.
+        - test_alphabet (str): The alphabet to translate to.
 
         Returns:
-        - dict: A translation dictionary based on the order of letters in the alphabet.
+        - dict: A translation dictionary based on the order of letters in 
+        the alphabet.
         """
-        return D_ReplaceOneLetter.getTranslateDictSortAlphabet_s(self._text, testAlphabet)
+        return DecryptorReplaceOneLetter.get_translate_dict_sort_alphabet_s(self._text, 
+                                                                            test_alphabet)
 
 
     @staticmethod
@@ -223,7 +238,7 @@ class D_ReplaceOneLetter:
 
 
     @staticmethod
-    def decryptionSortAlphabet_s(text: str, key: str) -> str:
+    def decryption_sort_alphabet_s(text: str, key: str) -> str:
         """
         Decrypt the text based on an input key using alphabet order.
 
@@ -235,10 +250,11 @@ class D_ReplaceOneLetter:
         - str: The decrypted text based on the key and alphabet order.
         """
 
-        dictionary = D_ReplaceOneLetter.getTranslateDictSortAlphabet_s(text, key)
-        return D_ReplaceOneLetter.__translate(text, dictionary)
+        dictionary = DecryptorReplaceOneLetter.get_translate_dict_sort_alphabet_s(text, 
+                                                                                  key)
+        return DecryptorReplaceOneLetter.__translate(text, dictionary)
 
-    def decryptionSortAlphabet(self, key: str) -> str:
+    def decryption_sort_alphabet(self, key: str) -> str:
         """
         Decrypt the stored text based on an input key using alphabet order.
 
@@ -248,38 +264,45 @@ class D_ReplaceOneLetter:
         Returns:
         - str: The decrypted text based on the key and alphabet order.
         """
-        return D_ReplaceOneLetter.decryptionSortAlphabet_s(self._text, key)
+        return DecryptorReplaceOneLetter.decryption_sort_alphabet_s(self._text, 
+                                                                    key)
 
 
     @staticmethod
-    def decryptionSortFrequency_s(text: str, key: str) -> str:
+    def decryption_sort_frequency_s(text: str, key: str) -> str:
         """
-        Decrypt the text based on an input key using frequency-based translation.
+        Decrypt the text based on an input key using frequency-based
+        translation.
 
         Parameters:
         - text (str): The text to decrypt.
         - key (str): The key to decrypt the text.
 
         Returns:
-        - str: The decrypted text based on the key and frequency-based translation.
+        - str: The decrypted text based on the key and frequency-based 
+        translation.
         """
-        dictionary = D_ReplaceOneLetter.getTranslateDictSortFrequency_s(text, key)
-        return D_ReplaceOneLetter.__translate(text, dictionary)
+        dictionary = DecryptorReplaceOneLetter.get_translate_dict_sort_frequency_s(text, 
+                                                                                   key)
+        return DecryptorReplaceOneLetter.__translate(text, dictionary)
         
-    def decryptionSortFrequency(self, key: str) -> str:
+    def decryption_sort_frequency(self, key: str) -> str:
         """
-        Decrypt the stored text based on an input key using frequency-based translation.
+        Decrypt the stored text based on an input key using frequency-based 
+        translation.
 
         Parameters:
         - key (str): The key to decrypt the stored text.
 
         Returns:
-        - str: The decrypted text based on the key and frequency-based translation.
+        - str: The decrypted text based on the key and frequency-based 
+        translation.
         """
-        return D_ReplaceOneLetter.decryptionSortFrequency_s(self._text, key)
+        return DecryptorReplaceOneLetter.decryption_sort_frequency_s(self._text, 
+                                                                     key)
 
     @staticmethod
-    def splitText(text: str, delimiters: list) -> list:
+    def split_text(text: str, delimiters: list) -> list:
         """
         Split the text into words based on provided delimiters.
 
@@ -300,7 +323,9 @@ class D_ReplaceOneLetter:
         return words
     
     @staticmethod
-    def splitTextBySize_s(text: str, delimiters: list, size: int) -> list:
+    def split_text_by_size_s(text: str, 
+                             delimiters: list, 
+                             size: int) -> list:
         """
         Split the text into words of a specific size.
 
@@ -312,12 +337,12 @@ class D_ReplaceOneLetter:
         Returns:
         - list: A list of words from the text with the specified size.
         """
-        words = D_ReplaceOneLetter.splitText(text, delimiters)
+        words = DecryptorReplaceOneLetter.split_text(text, delimiters)
         filtered_words = [word for word in words if len(word) == size]
 
         return filtered_words
     
-    def splitTextBySize(self, delimiters: list, size: int) -> list:
+    def split_text_by_size(self, delimiters: list, size: int) -> list:
         """
         Split the stored text into words of a specific size.
 
@@ -328,29 +353,34 @@ class D_ReplaceOneLetter:
         Returns:
         - list: A list of words from the stored text with the specified size.
         """
-        return D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size) 
+        return DecryptorReplaceOneLetter.split_text_by_size_s(self._text, 
+                                                              delimiters, 
+                                                              size) 
         
     @staticmethod
-    def swapLettersInTestAlphabet(testAlphabet: str, letter_1: str, letter_2: set) -> str:
+    def swap_letters_in_alphabet(test_alphabet: str, 
+                                 letter_1: str, 
+                                 letter_2: set) -> str:
         """
         Swap two letters in the test alphabet.
 
         Parameters:
-        - testAlphabet (str): The test alphabet to perform the swap.
+        - test_alphabet (str): The test alphabet to perform the swap.
         - letter_1 (str): The first letter to swap.
         - letter_2 (str): The second letter to swap.
 
         Returns:
         - str: The new test alphabet after swapping letters.
         """
-        if len(set(testAlphabet)) != len(testAlphabet) or len(letter_1) != 1 \
-            or len(letter_2) != 1 or not (letter_1 in testAlphabet) or not \
-            (letter_2 in testAlphabet):
+        if len(set(test_alphabet)) != len(test_alphabet) \
+            or len(letter_1) != 1  or len(letter_2) != 1 \
+            or not (letter_1 in test_alphabet) or not \
+            (letter_2 in test_alphabet):
             
             raise Exception("Bad Alphabet or letters for swap")
         
         new_text = ""
-        for char in testAlphabet:
+        for char in test_alphabet:
             if char == letter_1:
                 new_text += letter_2
             elif char == letter_2:
@@ -361,7 +391,9 @@ class D_ReplaceOneLetter:
         return new_text
     
     @staticmethod
-    def countWordSizeInText_s(text: str, delimiters: list, size: int) -> int:
+    def count_word_size_in_text_s(text: str,
+                                  delimiters: list,
+                                  size: int) -> int:
         """
         Count the number of words of a specific size in the text.
 
@@ -374,9 +406,11 @@ class D_ReplaceOneLetter:
         - int: The number of words of the specified size in the text.
         """
 
-        return len(D_ReplaceOneLetter.splitTextBySize_s(text, delimiters, size))
+        return len(DecryptorReplaceOneLetter.split_text_by_size_s(text, 
+                                                                  delimiters, 
+                                                                  size))
     
-    def countWordSizeInText(self, delimiters: list, size: int) -> int:
+    def count_word_size_in_text(self, delimiters: list, size: int) -> int:
         """
         Count the number of words of a specific size in the stored text.
 
@@ -387,10 +421,10 @@ class D_ReplaceOneLetter:
         Returns:
         - int: The number of words of the specified size in the stored text.
         """
-        return len(D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size))
+        return len(DecryptorReplaceOneLetter.split_text_by_size_s(self._text, delimiters, size))
     
     @staticmethod
-    def wordSizeInTextFrequency_s(text: str, delimiters: list, size: int) -> float:
+    def word_size_in_text_frequency_s(text: str, delimiters: list, size: int) -> float:
         """
         Calculate the frequency of words of a specific size in the text.
 
@@ -402,29 +436,33 @@ class D_ReplaceOneLetter:
         Returns:
         - float: The frequency of words of the specified size in the text.
         """
-        return len(D_ReplaceOneLetter.splitTextBySize_s(text, delimiters, size)) / len(D_ReplaceOneLetter.splitText(text, delimiters))
+        return len(DecryptorReplaceOneLetter.split_text_by_size_s(text, delimiters, size)) / len(DecryptorReplaceOneLetter.split_text(text, delimiters))
     
-    def wordSizeInTextFrequency(self, delimiters: list, size: int) -> float:
+    def word_size_in_text_frequency(self, delimiters: list, size: int) -> float:
         """
-        Calculate the frequency of words of a specific size in the stored text.
+        Calculate the frequency of words of a specific size in the stored 
+        text.
 
         Parameters:
         - delimiters (list): List of delimiters to use for word separation.
         - size (int): The size of words to consider for frequency.
 
         Returns:
-        - float: The frequency of words of the specified size in the stored text.
+        - float: The frequency of words of the specified size in the stored 
+        text.
         """
-        return len(D_ReplaceOneLetter.splitTextBySize_s(self._text, delimiters, size)) / len(D_ReplaceOneLetter.splitText(self._text, delimiters))
+        return len(DecryptorReplaceOneLetter.split_text_by_size_s(self._text, delimiters, size)) / len(DecryptorReplaceOneLetter.split_text(self._text, delimiters))
 
 
     @staticmethod
-    def swapSetCharacters(testAlphabet: str, set_1: str, set_2: str) -> str:
+    def swap_set_characters(test_alphabet: str, 
+                            set_1: str, 
+                            set_2: str) -> str:
         """
         Swap sets of characters in the test alphabet.
 
         Parameters:
-        - testAlphabet (str): The test alphabet to perform the swap.
+        - test_alphabet (str): The test alphabet to perform the swap.
         - set_1 (str): The first set of characters to swap.
         - set_2 (str): The second set of characters to swap.
 
@@ -435,14 +473,16 @@ class D_ReplaceOneLetter:
 
             raise Exception("Bad set_1_2 for swap")
 
-        newText = testAlphabet
+        new_text = test_alphabet
         for c in range(len(set_1)):
-            newText = D_ReplaceOneLetter.swapLettersInTestAlphabet(newText, set_1[c], set_2[c])
+            new_text = DecryptorReplaceOneLetter.swap_letters_in_alphabet(new_text, 
+                                                                          set_1[c], 
+                                                                          set_2[c])
         
-        return newText
+        return new_text
         
         
-    def export_KeyJSON(self, 
+    def export_key_json(self, 
                        alphabetFrequency: str, 
                        fileForExport: str="key_alphabet.json", 
                        nameForHeaderKey:str = "key", 
@@ -452,9 +492,12 @@ class D_ReplaceOneLetter:
 
         Parameters:
         - alphabetFrequency (str): The alphabet frequency for translation.
-        - fileForExport (str): The file name for exporting the JSON (default: "key_alphabet.json").
-        - nameForHeaderKey (str): The header name for the translation key (default: "key").
-        - nameForHeaderAlphabet (str): The header name for the alphabet (default: "alphabet").
+        - fileForExport (str): The file name for exporting the JSON 
+        (default: "key_alphabet.json").
+        - nameForHeaderKey (str): The header name for the translation key 
+        (default: "key").
+        - nameForHeaderAlphabet (str): The header name for the alphabet 
+        (default: "alphabet").
 
         Raises:
         - Exception: If the file for export already exists.
@@ -464,7 +507,7 @@ class D_ReplaceOneLetter:
         if os.path.isfile(fileForExport):
             raise Exception(f"{fileForExport} уже существует")
             
-        info = self.getTranslateDictFrequency(alphabetFrequency)
+        info = self.get_translate_dict_frequency(alphabetFrequency)
 
         info1 = {nameForHeaderKey: dict(zip(info.keys(), info.values()))}
 
