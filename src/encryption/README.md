@@ -2,7 +2,7 @@
 ## Перевод:
         python3 enigma_program.py -pk Solution1/key -x Solution1/cihep.txt -o Solution1/translate.txt --translate True -s Solution1/seed
 ## Шифрация:
-        python3 enigma_program.py -pk Solution1/key -x Solution1/text.txt -o Solution1/cihep.txt -s Solution1/seed
+        python3 enigma_program.py -pk key -x key -o passwd -sft seed
 
 # для дешифратора:
 ## Для ананлиза слов:

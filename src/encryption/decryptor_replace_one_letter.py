@@ -1,6 +1,6 @@
 import argparse
 
-from src.encryption.decryptors.decryptor_replace_one_letter import DecryptorReplaceOneLetter as DCrypt
+from decryptors.decryptor_replace_one_letter import DecryptorReplaceOneLetter as DCrypt
 
 CONST_LETTERS_MAX_IN_ENCODE = 20
 
