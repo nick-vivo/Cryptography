@@ -273,7 +273,7 @@ class Enigma:
             
 
             if index > len(trash):
-                raise Exception("Your key is very bad")
+                raise Exception("Your key or seed(values key or repeat more) is very bad")
         
         rotors = []
         

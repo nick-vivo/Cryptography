@@ -48,7 +48,7 @@ def generate_command(parser: argparse.ArgumentParser):
     parser.add_argument('-o', '--file_for_export', type=str, 
                         help='Output file name (will overwrite existing)')
     parser.add_argument('--translate', type=bool, default=False, 
-                        help='Encrypt text')
+                        help='Encrypt text(True or False)')
     parser.add_argument('-e', '--export_key_txt', type=str,
                         help="Export key to file")
 
